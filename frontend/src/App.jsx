@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Key, Play, Loader, AlertTriangle, CheckCircle2, Download, ExternalLink } from 'lucide-react';
+import { Key, Play, Loader, AlertTriangle, CheckCircle2, Download, ExternalLink, Settings, X } from 'lucide-react';
 import MediaUploader from './components/MediaUploader';
 import './index.css';
 
@@ -9,6 +9,7 @@ const API_BASE_URL = '/api';
 function App() {
   const [apiKey, setApiKey] = useState('');
   const [isKeySaved, setIsKeySaved] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
   // Form State
   const [imageFile, setImageFile] = useState(null);
@@ -33,6 +34,8 @@ function App() {
     if (savedKey) {
       setApiKey(savedKey);
       setIsKeySaved(true);
+    } else {
+      setTimeout(() => setIsModalOpen(true), 500); // slight delay for smooth appearance
     }
   }, []);
 
@@ -182,32 +185,59 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="header">
+      {/* Settings Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            {apiKey && (
+              <button className="modal-close" onClick={() => setIsModalOpen(false)}>
+                <X size={24} />
+              </button>
+            )}
+            <h2>Configuration</h2>
+            <p>Please enter your TEXA API Key to unlock the generation capabilities.</p>
+            
+            <div className="modal-body">
+              <div className="api-input-wrapper">
+                <Key size={18} color="var(--text-secondary)" />
+                <input 
+                  type="password" 
+                  placeholder="Enter TEXA API Key..." 
+                  value={apiKey}
+                  onChange={(e) => {
+                    setApiKey(e.target.value);
+                    setIsKeySaved(false);
+                  }}
+                />
+              </div>
+              <button 
+                className="btn-primary" 
+                onClick={() => {
+                  handleSaveKey();
+                  if (apiKey.trim()) setIsModalOpen(false);
+                }}
+                disabled={!apiKey.trim()}
+              >
+                {isKeySaved ? 'Update & Continue' : 'Save & Continue'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <header className="header" style={{ position: 'relative' }}>
+        <button 
+          onClick={() => setIsModalOpen(true)} 
+          className="btn-secondary" 
+          style={{ position: 'absolute', right: 0, top: 0, padding: '0.6rem', borderRadius: '50%', background: 'rgba(14, 165, 233, 0.1)' }}
+          title="Settings"
+        >
+          <Settings size={20} color="var(--accent-color)" />
+        </button>
         <h1>TEXA Motion Control</h1>
         <p style={{ fontSize: '0.9rem', opacity: 0.8, marginTop: '-0.5rem', marginBottom: '1rem', fontStyle: 'italic', letterSpacing: '1px' }}>powered by Kling 3.0</p>
         <p>Transfer motion from any video to a character seamlessly</p>
       </header>
-
-      {/* API Key Configuration */}
-      <div className="api-key-section">
-        <div className="api-input-wrapper">
-          <Key size={18} color="var(--text-secondary)" />
-          <input 
-            type="password" 
-            placeholder="Enter TEXA API Key..." 
-            value={apiKey}
-            onChange={(e) => {
-              setApiKey(e.target.value);
-              setIsKeySaved(false);
-            }}
-          />
-          {isKeySaved ? (
-            <CheckCircle2 color="var(--success-color)" size={18} title="Saved to Local Storage" />
-          ) : (
-            <button className="btn-secondary" onClick={handleSaveKey}>Save Key</button>
-          )}
-        </div>
-      </div>
 
       {errorMsg && (
         <div style={{ background: 'var(--danger-color)', padding: '1rem', borderRadius: '8px', marginBottom: '2rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
