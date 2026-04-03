@@ -340,16 +340,14 @@ function App() {
 
           {taskStatus === 'COMPLETED' && generatedVideo && (
             <div className="generated-video-container">
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem' }}>
-                <video src={generatedVideo} crossOrigin="anonymous" controls autoPlay loop className="generated-video" />
-                
-                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                  <button onClick={() => handleDownloadVideo(generatedVideo)} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Download size={18} />
-                    <span>Download Video</span>
-                  </button>
-                </div>
-              </div>
+              <video src={generatedVideo} crossOrigin="anonymous" controls autoPlay loop className="generated-video" />
+              <button 
+                onClick={() => handleDownloadVideo(generatedVideo)} 
+                className="download-overlay-btn" 
+                title="Download Video"
+              >
+                <Download size={20} />
+              </button>
             </div>
           )}
         </div>
