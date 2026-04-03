@@ -339,11 +339,12 @@ function App() {
           )}
 
           {taskStatus === 'COMPLETED' && generatedVideo && (
-            <div className="generated-video-container">
-              <video src={generatedVideo} crossOrigin="anonymous" controls autoPlay loop className="generated-video" />
+            <div className="generated-video-container" style={{ position: 'relative' }}>
+              <video src={generatedVideo} crossOrigin="anonymous" controls controlsList="nodownload" autoPlay loop className="generated-video" />
+              
               <button 
                 onClick={() => handleDownloadVideo(generatedVideo)} 
-                className="download-overlay-btn" 
+                className="download-overlay-btn"
                 title="Download Video"
               >
                 <Download size={20} />
