@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Key, Play, Loader, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { Key, Play, Loader, AlertTriangle, CheckCircle2, Download, ExternalLink } from 'lucide-react';
 import MediaUploader from './components/MediaUploader';
 import './index.css';
 
@@ -291,11 +291,20 @@ function App() {
 
           {taskStatus === 'COMPLETED' && generatedVideo && (
             <div className="generated-video-container">
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem' }}>
                 <video src={generatedVideo} crossOrigin="anonymous" controls autoPlay loop className="generated-video" />
-                <a href={generatedVideo} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ textDecoration: 'none' }}>
-                  Open Video in New Tab
-                </a>
+                
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <a href={generatedVideo} download="kling-motion-video.mp4" className="btn-primary" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Download size={18} />
+                    <span>Download Video</span>
+                  </a>
+                  
+                  <a href={generatedVideo} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <ExternalLink size={18} />
+                    <span>Open in New Tab</span>
+                  </a>
+                </div>
               </div>
             </div>
           )}
