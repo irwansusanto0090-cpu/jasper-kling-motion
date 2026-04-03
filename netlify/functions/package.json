@@ -1,0 +1,13 @@
+{
+  "name": "kling-motion-control-functions",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.14.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "form-data": "^4.0.5",
+    "multer": "^2.1.1",
+    "serverless-http": "^3.2.0"
+  }
+}
