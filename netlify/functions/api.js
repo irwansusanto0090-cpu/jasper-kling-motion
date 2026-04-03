@@ -102,6 +102,15 @@ app.post('/api/generate/:model', async (req, res) => {
       }
     }
 
+    if (errorMsg) {
+      errorMsg = errorMsg.replace(/https:\/\/www\.freepik\.com[^\s]*/gi, '');
+      errorMsg = errorMsg.replace(/freepik/gi, 'TEXA');
+    }
+    if (details) {
+      details = details.replace(/https:\/\/www\.freepik\.com[^\s]*/gi, '');
+      details = details.replace(/freepik/gi, 'TEXA');
+    }
+
     res.status(error.response?.status || 500).json({ error: errorMsg, details });
   }
 });
@@ -127,7 +136,11 @@ app.get('/api/status/:model/:taskId', async (req, res) => {
     res.json(response.data);
   } catch (error) {
     console.error('Status Error:', error.response?.data || error.message);
-    res.status(error.response?.status || 500).json(error.response?.data || { error: 'Failed to fetch status' });
+    let respData = error.response?.data || { error: 'Failed to fetch status' };
+    let respString = JSON.stringify(respData);
+    respString = respString.replace(/https:\/\/www\.freepik\.com[^\s\\]*/gi, '');
+    respString = respString.replace(/freepik/gi, 'TEXA');
+    res.status(error.response?.status || 500).json(JSON.parse(respString));
   }
 });
 
