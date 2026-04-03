@@ -153,6 +153,9 @@ function App() {
         errMsg = err.message || errMsg;
       }
 
+      errMsg = errMsg.replace(/https:\/\/www\.freepik\.com[^\s]*/gi, '');
+      errMsg = errMsg.replace(/freepik/gi, 'TEXA');
+
       setErrorMsg(errMsg);
       setIsGenerating(false);
       setTaskStatus('FAILED');
