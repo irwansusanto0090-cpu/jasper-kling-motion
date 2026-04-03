@@ -29,7 +29,7 @@ function App() {
 
   // Load API key from local storage on mount
   useEffect(() => {
-    const savedKey = localStorage.getItem('freepik_api_key');
+    const savedKey = localStorage.getItem('texa_api_key');
     if (savedKey) {
       setApiKey(savedKey);
       setIsKeySaved(true);
@@ -38,10 +38,10 @@ function App() {
 
   const handleSaveKey = () => {
     if (apiKey.trim()) {
-      localStorage.setItem('freepik_api_key', apiKey.trim());
+      localStorage.setItem('texa_api_key', apiKey.trim());
       setIsKeySaved(true);
     } else {
-      localStorage.removeItem('freepik_api_key');
+      localStorage.removeItem('texa_api_key');
       setIsKeySaved(false);
     }
   };
@@ -87,7 +87,7 @@ function App() {
 
   const handleGenerate = async () => {
     if (!apiKey) {
-      setErrorMsg('Please enter your Freepik API Key first.');
+      setErrorMsg('Please enter your TEXA API Key first.');
       return;
     }
     if (!imageFile || !videoFile) {
@@ -162,10 +162,29 @@ function App() {
     };
   }, []);
 
+  const handleDownloadVideo = async (url) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = objectUrl;
+      link.download = 'texa-motion-video.mp4';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(objectUrl);
+    } catch (e) {
+      console.error("Download failed, opening in new tab instead:", e);
+      window.open(url, '_blank');
+    }
+  };
+
   return (
     <div className="app-container">
       <header className="header">
-        <h1>Kling Motion Control</h1>
+        <h1>TEXA Motion Control</h1>
+        <p style={{ fontSize: '0.9rem', opacity: 0.8, marginTop: '-0.5rem', marginBottom: '1rem', fontStyle: 'italic', letterSpacing: '1px' }}>powered by Kling 3.0</p>
         <p>Transfer motion from any video to a character seamlessly</p>
       </header>
 
@@ -175,7 +194,7 @@ function App() {
           <Key size={18} color="var(--text-secondary)" />
           <input 
             type="password" 
-            placeholder="Enter Freepik API Key..." 
+            placeholder="Enter TEXA API Key..." 
             value={apiKey}
             onChange={(e) => {
               setApiKey(e.target.value);
@@ -295,15 +314,10 @@ function App() {
                 <video src={generatedVideo} crossOrigin="anonymous" controls autoPlay loop className="generated-video" />
                 
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                  <a href={generatedVideo} download="kling-motion-video.mp4" className="btn-primary" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <button onClick={() => handleDownloadVideo(generatedVideo)} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <Download size={18} />
                     <span>Download Video</span>
-                  </a>
-                  
-                  <a href={generatedVideo} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <ExternalLink size={18} />
-                    <span>Open in New Tab</span>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>

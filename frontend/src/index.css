@@ -2,19 +2,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-color: #0b0f19;
-  --bg-gradient: radial-gradient(circle at top, #1a233a, #0b0f19 80%);
-  --panel-bg: rgba(255, 255, 255, 0.05);
-  --panel-border: rgba(255, 255, 255, 0.1);
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.6);
-  --accent-color: #6366f1;
-  --accent-hover: #4f46e5;
+  --bg-color: #050b14;
+  --bg-gradient: radial-gradient(ellipse at 50% top, #0c4a6e, #050b14 70%);
+  --panel-bg: rgba(14, 165, 233, 0.04);
+  --panel-border: rgba(14, 165, 233, 0.2);
+  --text-primary: #f8fafc;
+  --text-secondary: rgba(248, 250, 252, 0.65);
+  --accent-color: #0ea5e9;
+  --accent-hover: #0284c7;
   --success-color: #10b981;
   --danger-color: #ef4444;
-  --focus-ring: rgba(99, 102, 241, 0.5);
-  --border-radius: 16px;
-  --transition: all 0.3s ease;
+  --focus-ring: rgba(14, 165, 233, 0.5);
+  --border-radius: 20px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -55,8 +55,9 @@ body {
 .header h1 {
   font-size: 3rem;
   font-weight: 700;
-  background: linear-gradient(to right, #ffffff, #a5b4fc);
+  background: linear-gradient(to right, #ffffff, #7dd3fc);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
 }
@@ -69,12 +70,14 @@ body {
 /* Glassmorphism Panel */
 .glass-panel {
   background: var(--panel-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--panel-border);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--border-radius);
   padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 .api-key-section {
