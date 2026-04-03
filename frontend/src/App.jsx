@@ -291,7 +291,12 @@ function App() {
 
           {taskStatus === 'COMPLETED' && generatedVideo && (
             <div className="generated-video-container">
-              <video src={generatedVideo} controls autoPlay loop className="generated-video" />
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                <video src={generatedVideo} crossOrigin="anonymous" controls autoPlay loop className="generated-video" />
+                <a href={generatedVideo} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ textDecoration: 'none' }}>
+                  Open Video in New Tab
+                </a>
+              </div>
             </div>
           )}
         </div>
