@@ -29,7 +29,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
       contentType: req.file.mimetype
     });
 
-    const response = await axios.post('https://tmpfiles.org/api/v1/upload', formData, {
+    const response = await axios.post('https://jasper-temp-file.jasperhornet9.workers.dev/api/upload', formData, {
       headers: {
         ...formData.getHeaders(),
       },
